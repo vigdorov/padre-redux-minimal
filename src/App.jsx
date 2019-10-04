@@ -1,37 +1,57 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import {addElement, deleteElement} from "./store/action_creators";
+import {addElement, deleteElement, editElement} from "./store/action_creators";
 
 class App extends Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      text: '',
+        text: '',
+        index: ''
     }
   }
 
   render () {
-    const { list, addElement, deleteElement } = this.props;
-    const { text } = this.state;
+    const { list, addElement, deleteElement, editElement } = this.props;
+    const { text, index } = this.state;
 
     const handleAddElement = () => {
-      addElement( text );
+        if (index === ''){
+            addElement( text );
+        } else {
+            editElement(text, index);
+            console.log('start');
+        }
+
     };
 
     const handleChangeInput = (event) => {
-      const { value } = event.currentTarget;
+      let { value } = event.currentTarget;
       this.setState({ text: value });
+    };
+
+    const handleTakeIndex = (element, i) => {
+        this.setState({index: i});
+        this.setState({text: element});
+    };
+
+    const handleChangeIndex = (event) => {
+        let { value } = event.currentTarget;
+        if (value <= list.length -1) {
+            this.setState({index: value});
+        }
     };
 
     return (
       <div>
-        <input type="text" value={text} onChange={handleChangeInput}/>
+          <input type="tel" value={index} min="0" style={{width: "40px"}} onChange={handleChangeIndex}/>
+          <input type="text" value={text} onChange={handleChangeInput}/>
         <button onClick={handleAddElement}>+</button>
         <button onClick={deleteElement}>-</button>
         {
           list.map( (element, i) => {
-            return <div key={i}>{ element }</div>;
+            return <div key={i} onClick={() => handleTakeIndex(element, i)}>{ element }</div>;
           })
         }
       </div>
@@ -48,7 +68,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addElement: (payload) => dispatch( addElement(payload) ),
-    deleteElement: () => dispatch( deleteElement() ),
+    deleteElement: () => dispatch( deleteElement() ),              editElement: (payload , index) => dispatch( editElement(payload, index) ),
   }
 };
 

@@ -13,3 +13,11 @@ export const deleteElement = () => {
     payload: null
   };
 };
+
+export const editElement = (payload, index) => {
+  return {
+    type: A.EDIT_ELEMENT,
+    payload: payload,
+    index: index,
+  };
+};

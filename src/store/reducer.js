@@ -12,6 +12,7 @@ export const reducer = (store = initState, action) => {
     case A.ADD_ELEMENT: {
       const list = [ ...store.list ];
       list.push( action.payload );
+      console.log("list", list);
       return { ...store, list };
     }
     case A.DELETE_ELEMENT: {
@@ -19,6 +20,14 @@ export const reducer = (store = initState, action) => {
       if (list.length) {
         list.pop();
       }
+      return { ...store, list };
+    }
+    case A.EDIT_ELEMENT: {
+      const list = [...store.list];
+      const item = action.payload;
+      const i = action.index;
+      list[i] = item;
+      console.log("list", list, 'index', i);
       return { ...store, list };
     }
     default: {
