@@ -43,12 +43,16 @@ class App extends Component {
         }
     };
 
+    const handleDeleteElement = () => {
+      deleteElement( index );
+    };
+
     return (
       <div>
           <input type="tel" value={index} min="0" style={{width: "40px"}} onChange={handleChangeIndex}/>
           <input type="text" value={text} onChange={handleChangeInput}/>
         <button onClick={handleAddElement}>+</button>
-        <button onClick={deleteElement}>-</button>
+        <button onClick={handleDeleteElement}>-</button>
         {
           list.map( (element, i) => {
             return <div key={i} onClick={() => handleTakeIndex(element, i)}>{ element }</div>;
@@ -68,7 +72,8 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addElement: (payload) => dispatch( addElement(payload) ),
-    deleteElement: () => dispatch( deleteElement() ),              editElement: (payload , index) => dispatch( editElement(payload, index) ),
+    deleteElement: (payload) => dispatch( deleteElement(payload) ),
+    editElement: (payload , index) => dispatch( editElement(payload, index) ),
   }
 };
 

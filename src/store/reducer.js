@@ -17,8 +17,9 @@ export const reducer = (store = initState, action) => {
     }
     case A.DELETE_ELEMENT: {
       const list = [ ...store.list ];
+      const i = action.payload;
       if (list.length) {
-        list.pop();
+        list.splice(i, 1);
       }
       return { ...store, list };
     }

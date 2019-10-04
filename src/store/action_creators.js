@@ -7,10 +7,10 @@ export const addElement = (payload) => {
   };
 };
 
-export const deleteElement = () => {
+export const deleteElement = (payload) => {
   return {
     type: A.DELETE_ELEMENT,
-    payload: null
+    payload: payload
   };
 };
 
